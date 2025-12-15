@@ -1,0 +1,17 @@
+
+{% load static %}
+
+
+
+
+
+               <h2>ABOUT US CONTENTS STILL IN PREPARATION</h2>
+                  {% for aboutus in get_all_aboutus %}
+                  <div class="info-sub-w3">
+                    <h4>{{get_all_aboutus.content }}</h4>
+                     <p><strong>Description:</strong> {{get_all_aboutus.content }}</p>
+
+                  </div>
+                     {% endfor %}
+
+
