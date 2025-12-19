@@ -17,12 +17,11 @@
 # admin.site.register(Our_partners)
 
 
-
 # admin.py
 from django.contrib import admin
 from .models import (
     Student, Result, Subject, AcademicPeriod,
-    School, GradingStructure, SchoolAdministrator
+    School, GradingStructure, SchoolAdministrator,Schedule,Carousel,Contact_us,Our_partners,About_us
 )
 from django.http import HttpResponse
 from django.template.loader import render_to_string
@@ -57,7 +56,7 @@ class ResultInline(admin.TabularInline):
 
 # -------------------------
 # Student Admin
-# # -------------------------
+# -------------------------
 # @admin.register(Student)
 # class StudentAdmin(admin.ModelAdmin):
 #     list_display = ("index_number", "full_name", "school", "gender", "year")
@@ -90,8 +89,8 @@ class ResultInline(admin.TabularInline):
 #             "period": period
 #         })
 
-#         # pdf = HTML(string=html).write_pdf()
-#         # response = HttpResponse(pdf, content_type='application/pdf')
+#         pdf = HTML(string=html).write_pdf()
+#         response = HttpResponse(pdf, content_type='application/pdf')
 #         response['Content-Disposition'] = f'filename="PassSlip_{student.index_number}.pdf"'
 #         return response
 
@@ -102,9 +101,9 @@ class ResultInline(admin.TabularInline):
 # -------------------------
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
-    list_display = ("code", "name", "district")
-    search_fields = ("name", "code")
-    list_filter = ("district",)
+    list_display = ("code", "name", "district","police_station","head_teacher_name","dos_theology_name","contact","school_logo")
+    search_fields = ("name", "code", "location")
+    list_filter = ("district", "police_station")
 
 # -------------------------
 # School Administrator
@@ -151,3 +150,57 @@ class ResultAdmin(admin.ModelAdmin):
             return qs
         # Only results belonging to this school
         return qs.filter(student__school=request.user.schooladministrator.school)
+
+
+# -----------
+# About_us
+# ------------
+
+@admin.register(About_us)
+class About_usAdmin(admin.ModelAdmin):
+    list_display = ('admin_name', 'content')
+   
+# ------------------
+# SCHEDULE
+# ------------------
+
+@admin.register(Schedule)
+class ScheduleAdmin(admin.ModelAdmin):
+    list_display = ('activity_name','activity_description','activity_image')
+    list_filter = ("activity_name","date")
+    search_fields = ("date","activity_name")
+   
+ 
+ # -------------
+# CAROUSEL
+# --------------
+
+@admin.register(Carousel)
+class CarouselAdmin(admin.ModelAdmin):
+    list_display = ('carousel_description','carousel_image')
+
+# --------------
+# CONTACT US
+# -------------      
+
+@admin.register(Contact_us)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('user_name','contact','message')
+
+# ---------------
+# OUR PARTNERS
+# ---------------
+@admin.register(Our_partners)
+class Our_partnerAdmin(admin.ModelAdmin):
+    list_display = ('partner_name','partner_image')
+    search_fields = ("partner_name",'partner_image')
+
+# -------------------------
+# Student Admin
+# -------------------------
+
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ("index_number", "full_name", "school", "gender", "year")
+    search_fields = ("index_number", "full_name")
+    list_filter = ("school", "gender", "year")

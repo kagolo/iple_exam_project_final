@@ -74,7 +74,7 @@
                   <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                      <ul class="navbar-nav ">
                         <li class="nav-item active">
-                           <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                           <a class="nav-link" href="{% url 'iple' %}">Home <span class="sr-only">(current)</span></a>
                         </li>
                         <li class="nav-item">
                            <a href="#about" class="nav-link scroll">About Us</a>  
@@ -108,7 +108,7 @@
             <div class="callbacks_container">
                <ul class="rslides" id="slider4">
                   <li>
-                     <div class="slider-img one-img">   {% static 'slider-img one-img' %}
+                     <div class="slider-img one-img">   
                         <div class="container">
                            <div class="slider-info text-center">
                               <h4>Link of Islamic Schools</h4>
@@ -165,14 +165,16 @@
       <!-- About-one -->
       <section class="about py-lg-4 py-md-3 py-sm-3 py-3" id="about">
          <div class="container-fluid py-lg-5 py-md-5 py-sm-4 py-3">
+            {% for aboutus in get_all_aboutus %}
             <div class="title-sub text-left mb-lg-5 mb-md-4 mb-sm-4 mb-3">
                <h3 class="title mb-md-4 mb-sm-3 mb-3">UMSC Link Of Islamic Schools In Uganda</h3>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br>tempor incididunt ut labore et</p>
+               <p>{{aboutus.content }}</p>
             </div>
             <div class="row abt-colm pb-lg-4 pb-md-3 pb-3">
                <div class="col-lg-5 agile-info-img">
                   <img src="{% static 'images/About_us1.jpg' %}" class="img-fluid" alt="">         
                </div>
+               
                <div class="col-lg-5 agile-abt-info about-grid">
                   <div class="info-sub-w3">
                      <h5>velit sagittis vehicula. Duis posuere ex in mollis iaculis. 
@@ -181,14 +183,13 @@
                   </div>
                   <h4>ABOUT US</h4>
                   <div class="info-sub-w3">
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                     </p>
+                     <p>{{aboutus.content_2 }}.</p>
                   </div>
                   <div class="outs-about-buttn mt-lg-4 mt-md-3 mt-3">
                      <a href="{% url 'about_us' %}">Read More</a>
                   </div>
                </div>
+               {% endfor %}
             </div>
             <div class="row abt-colm my-lg-5 my-md-4 my-3">
                <div class="offset-md-2 col-lg-5 agile-abt-info text-right">
@@ -223,8 +224,7 @@
                   </div>
                   <h4>APPLY RESULTS</h4>
                   <div class="info-sub-w3">
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                     <p>To apply for results, click on the button below to navigate to schools page. Then search and click on your prefered school from the list,which will take you to a single school page.                       You can also search and then click on your prefered student's results, make payment for it, then view and download the pdf file.
                      </p>
                   </div>
                   <div class="outs-about-buttn mt-lg-4 mt-md-3 mt-3">
@@ -278,7 +278,7 @@
       </section>
       <!--//states -->
       <!--service-->	
-      <section class="service py-lg-4 py-md-3 py-sm-3 py-3" id="service">
+      <!-- <section class="service py-lg-4 py-md-3 py-sm-3 py-3" id="service">
          <div class="container py-lg-5 py-md-5 py-sm-4 py-3">
             <div class="title-sub text-right mb-lg-5 mb-md-4 mb-sm-4 mb-3">
                <h3 class="title mb-md-4 mb-sm-3 mb-3">Our Partners</h3>
@@ -299,7 +299,7 @@
                </div>
             </div>
          </div>
-      </section>
+      </section> -->
       <!--//service-->
       <!-- clients -->
       <section class="clients py-lg-4 py-md-3 py-sm-3 py-3" id="testimonials">
@@ -310,57 +310,35 @@
             </div>
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                <div class="carousel-inner">
+                  
                   <div class="carousel-item active">    
                      <div class="row">
                         <div class="col-lg-3 col-md-4 col-sm-5 px-0 clients-w3layouts-row text-center">
-                           <img src="{% static 'images/patners1.jpg' %}" alt="" class="image-fluid">
+                           <img src="{% static 'images/link_iple_logo_lufuka_quality.jpg' %}" alt="" class="image-fluid">
                         </div>
                         <div class="col-lg-9 col-md-8 col-sm-7 news-agile-text ">
-                           <p>velit sagittis vehicula. Duis posuere 
-                              ex in mollis iaculis. Suspendisse tincidunt
-                              velit sagittis vehicula. Duis posuere 
-                              Suspendisse tincidunt
-                              velit sagittis vehicula. Duis posuere 
+                           <p>Link of Islamic Schools is a registred organisation working with Uganda Muslim Supreme Council under Department of Education. It is responsible for preparation/setting, distributing, monitoring, marking, evaluating and release of iple for Uganda.
                            </p>
-                           <h4 class="mt-3">Milky Deo 
+                           <h4 class="mt-3"> LINK OF ISLAMIC SCHOOLS
                            </h4>
                         </div>
                      </div>
                   </div>
+                  
+                 {% for sch_list in get_sch_list %}
                   <div class="carousel-item">
                      <div class="row">
                         <div class="col-lg-3 col-md-4 col-sm-5 px-0 clients-w3layouts-row text-center">
-                           <img src="{% static 'images/patners2.jpg' %}" alt="" class="image-fluid">
+                           <img src="{{ sch_list.school_logo.url }}" alt=""/>
                         </div>
                         <div class="col-lg-9 col-md-8 col-sm-7 news-agile-text ">
-                           <p>velit sagittis vehicula. Duis posuere 
-                              ex in mollis iaculis. Suspendisse tincidunt
-                              velit sagittis vehicula. Duis posuere 
-                              Suspendisse tincidunt
-                              velit sagittis vehicula. Duis posuere 
-                           </p>
-                           <h4 class="mt-3">Milky Deo 
-                           </h4>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="carousel-item">
-                     <div class="row">
-                        <div class="col-lg-3 col-md-4 col-sm-5 px-0 clients-w3layouts-row text-center">
-                           <img src="{% static 'images/patners3.jpg' %}" alt="" class="image-fluid">
-                        </div>
-                        <div class="col-lg-9 col-md-8 col-sm-7 news-agile-text ">
-                           <p>velit sagittis vehicula. Duis posuere 
-                              ex in mollis iaculis. Suspendisse tincidunt
-                              velit sagittis vehicula. Duis posuere 
-                              Suspendisse tincidunt
-                              velit sagittis vehicula. Duis posuere 
-                           </p>
-                           <h4 class="mt-3">Milky Deo 
+                           <p>{{sch_list.name}} is located in {{sch_list.location}} {{sch_list.district}} district. The school is head by {{sch_list.head_teacher_name}} and {{sch_list.dos_theology_name}} is the Director of Studies Theology.</p>
+                           <h4 class="mt-3">{{sch_list.name}} 
                            </h4>
                         </div> 
                      </div>
                   </div>
+                  {% endfor %}
                </div>
                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -379,7 +357,7 @@
          <div class="container py-lg-5 py-md-5 py-sm-4 py-3">
             <div class="title-sub text-right mb-lg-5 mb-md-4 mb-sm-4 mb-3">
                <h3 class="title mb-md-4 mb-sm-3 mb-3">Our Schedule</h3>
-               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod <br>tempor incididunt ut labore et</p>
+               <p>Please take note about various programmes on our year schedule. <br>These can help you make prior preparations and archieve your goals.</p>
             </div>
             <div class="owl-carousel owl-theme">
                {% for schedule in get_single_schedules %}
@@ -425,13 +403,14 @@
          <div class="container py-lg-5 py-md-5 py-sm-4 py-3">
             <div class="row">
                <div class="dance-agile-info col-lg-4">
-                  <h4 class="pb-lg-3 pb-3">Stake Holders</h4>
+                  <h4 class="pb-lg-3 pb-3">Our Partners</h4>
+                  {% for partner in get_all_partners reversed %}
                   <div class="footer-grid row">
                      <div class="col-lg-5 col-md-6 col-sm-6 col-5">
-                        <img src="{% static 'images/bb1.jpg' %}" alt=" " class="img-fluid">
+                        <img src="{{ partner.partner_image.url }}" alt=" " class="img-fluid" >
                      </div>
                      <div class="col-lg-7 col-md-6 col-sm-6 col-7 bottom-para px-0">
-                        <h6><a href="#" data-toggle="modal" data-target="#exampleModalLive">ultricies nec,pellen eu,pretium quis,</a></h6>
+                        <h6><a href="#" data-toggle="modal" data-target="#exampleModalLive">{{partner.partner_name}},</a></h6>
                         <div class="news-date  pt-2">
                            <ul>
                               <li class="mr-1"><a href="#" data-toggle="modal" data-target="#exampleModalLive">12/4/2019</a></li>
@@ -440,34 +419,8 @@
                         </div>
                      </div>
                   </div>
-                  <div class="footer-grid row my-2">
-                     <div class="col-lg-5 col-md-6 col-sm-6 col-5">
-                        <img src="{% static 'images/bb2.jpg' %}" alt=" " class="img-fluid">
-                     </div>
-                     <div class="col-lg-7 col-md-6 col-sm-6 col-7 bottom-para px-0">
-                        <h6><a href="#" data-toggle="modal" data-target="#exampleModalLive">ultricies nec,pellen eu,pretium quis,</a></h6>
-                        <div class="news-date  pt-2">
-                           <ul>
-                              <li class="mr-1"><a href="#" data-toggle="modal" data-target="#exampleModalLive">12/4/2019</a></li>
-                              <li><a href="#" data-toggle="modal" data-target="#exampleModalLive">3 Tags</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="footer-grid row">
-                     <div class="col-lg-5 col-md-6 col-sm-6 col-5">
-                        <img src="{% static 'images/bb3.jpg' %}" alt=" " class="img-fluid">
-                     </div>
-                     <div class="col-lg-7 col-md-6 col-sm-6 col-7 bottom-para px-0">
-                        <h6><a href="#" data-toggle="modal" data-target="#exampleModalLive">ultricies nec,pellen eu,pretium quis,</a></h6>
-                        <div class="news-date  pt-2">
-                           <ul>
-                              <li class="mr-1"><a href="#" data-toggle="modal" data-target="#exampleModalLive">12/4/2019</a></li>
-                              <li><a href="#" data-toggle="modal" data-target="#exampleModalLive">3 Tags</a></li>
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
+                  <br>
+                  {% endfor %}
                </div>
                <div class="dance-agile-info col-lg-3">
                   <h4 class="pb-lg-3 pb-3">Our Posts</h4>
@@ -525,10 +478,10 @@
                </div>
                <div class="dance-agile-info text-right col-lg-5">
                   <div class="bottom-para">
-                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et</p>
+                     <p>In case of any comment or inquiry, please us our contact us section</p>
                   </div>
                   <div class="footer-buttom text-white">
-                     <h6 class="text-white">eiusmod<br>Lorem<br>ipsum</h6>
+                     <h6 class="text-white">Our Quick Response Team<br>Is There<br>At Your service!!</h6>
                   </div>
                   <div class="subscribe-footer ">
                      <form action="#" method="post">
@@ -537,7 +490,7 @@
                               <input type="email" class="form-control" placeholder="Your Email" required="">
                            </div>
                            <div class="col-lg-4 col-md-4 col-sm-4 col-4 click-subscribe px-0">
-                              <button type="submit" class="btn click-me">Contact Us</button>
+                              <button a href="#" data-toggle="modal" data-target="#exampleModalLive" type="submit" class="btn click-me">Contact Us</a></button>
                            </div>
                         </div>
                      </form>
@@ -554,7 +507,7 @@
                      <div class="col-lg-4 col-md-4 col-sm-12 wthree-left-right">
                         <h4 class="pb-lg-3 pb-3">About Us</h4>
                         <div class="footer-info">
-                           <p>Lorem ipsum dolor sit amet, eiusmod tempor incididunt ut labore et</p>
+                           <p>Link of Islamic Schools is a registred organisation working with Uganda Muslim Supreme Council under Department of Education. It is responsible for preparation/setting, distributing, monitoring, marking, evaluating and release of iple for Uganda.</p>
                         </div>
                         <div class="icons mt-lg-4 mt-3 text-left">
                            <ul>
@@ -630,18 +583,64 @@
                   </button>                                
                </div>
                <div class="modal-body">
-                  <img src="{% static 'images/b2.jpg' %}" alt="" class="img-fluid">
+                  <div>
+                    <form method="post" action="">
+							 {% csrf_token %}
+					    	<div>
+						    	<span><label>NAME</label></span>
+						    </div>
+							{{ massege_form.user_name}}
+							<br>
+						    <div>
+						    	<span><label>CONTACT</label></span>				
+						    </div>
+							{{ massege_form.contact }}
+							<br>
+						    <div>
+						    	<span><label>MASSEGE</label></span>						    	
+						    </div>
+							{{ massege_form.message }}
+							<br>
+						   <div>
+						   		<span><input type="submit" value="Submit"  class="mybutton"></span>
+						  </div>
+					    </form>
                   <p>Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae,
                      eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellu
                   </p>
+                  </div>
                </div>
                <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="button" class="btn btn-primary">Save changes</button>
                </div>
+               <br>
+                  <div class="alert alert-danger">
+					{{form.errors}}
+                  </div>
+                  <br>
             </div>
          </div>
       </div>
+
+<script>
+    /* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript
+//We start indexing at one because CSRF_token is considered and input field 
+*/
+
+//Query All input fields
+var form_fields = document.getElementsByTagName('input')
+form_fields[1].placeholder='Enter Username..';
+form_fields[2].placeholder='Enter PhoneNumber..';
+form_fields[3].placeholder='Enter Message..';
+
+
+for (var field in form_fields){	
+form_fields[field].className += ' form-control'
+}
+</script>
+
+
       <!--//model-->
       <!--js working-->                                 
       <script src="{% static 'js/jquery-2.2.3.min.js' %}"></script>

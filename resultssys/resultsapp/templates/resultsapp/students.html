@@ -1,0 +1,45 @@
+
+
+{% extends 'resultsapp/main.html' %}
+{% load static %}
+<!-- {% load crispy_forms_tags %}
+{% load widget_tweaks %} -->
+
+
+
+
+{% block content %}
+<br>
+<center>
+  <h2>Islamic Primary Leaving Examination (IPLE)</h2>
+  <br>
+  <h2>Results For All Students</h2>
+  <p>Please search and click on your selected student from the list below;</p> 
+    </center> 
+  <br>
+  
+<table class="table table-dark table-hover">
+  <thead>
+  <tr>
+    <th>Index Number</th>
+    <th>Name</th>
+    <th>Gender</th>
+    <th>School</th>
+    <th>Acedemic Year</th>
+  </tr>
+  </thead>
+  <tbody>
+    {% for student in get_all_students %}
+  <tr>
+    <td>{{ student.index_number }}</td>
+    <td>{{ student.full_name }}</td>
+    <td>{{ student.gender }}</td>
+    <td>{{ student.school.name }}</td>
+    <td>{{ student.year }}</td>
+  </tr>
+    {% endfor %}
+  </tbody>
+</table>
+   
+
+ {% endblock content %} 

@@ -41,7 +41,8 @@
 
 </body>
 </html> -->
-
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,46 +56,60 @@
 <body>
 <div class="container">
   <br>
-  <center>
-    <h2>بسم الله الرحمن الرحيم</h2>
-    <h2>UGANDA MUSLIM SUPREME COUNCIL</h2>
-    <h2>Islamic Primary Leaving Examination (IPLE) - Pass Slip</h2>
-  </center>
+  <center><h2>Islamic Primary Leaving Examination (IPLE) - Pass Slip</h2></center>
   <br>
-  {% for student in get_single_school.student_set.all %}
-  <p style="float: right;"><img src="{{ student.student_image.url }}" alt=""/></p>
+  {%if  get_all_students_filter  %}
+      <form method="get">	
+      {% for field in  get_all_students_filter.form.visible_fields %}
+        <div class="form-group">
+          {% render_field get_all_students_filter.form.name class="form-control" placeholder="Enter School Name" %}
+          {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+          {% endfor %}
+        </div>
+      {% endfor %}
+    <div class="form-group">
+      <button type="submit" class="btn btn-success">
+        <span class="glyphicon glyphicon-ok"></span> Search
+      </button>
+      
+      </div>
+     </form>       
+
+  <!-- {% for student in get_all_students %}
   <p><strong>Name:</strong>   {{ student.full_name }}</p>
   <p><strong>Index No:</strong>  {{ student.index_number }}</p>
   <p><strong>School:</strong>   {{ student.school.name }}</p>
   <p><strong>Year:</strong>    {{ student.year }}</p>
-  {% endfor %}            
+  {% endfor %}             -->
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Quran</th>
-        <th>Fighu</th>
-        <th>Tarbia</th>
-        <th>Lugha</th>
-        <th>Total</th>
-        <th>Grade</th>
+        <th>Name:</th>
+        <th>Index No:</th>
+        <th>School:</th>
+        <th>Year</th>
     </tr>
     </thead>
     <tbody>
-        {% for student in get_single_school.student_set.all %}
+        {% for r in get_all_students_filter.qs %}
       <tr>
-        <td>{{ student.quran_grade }}</td>
-        <td>{{ student.fighu_grade}}</td>
-        <td>{{ student.tarbia_grade }}</td>
-        <td>{{ student.lugha_grade }}</td>
-        <td>{{ student.get_total }}</td>
-        <td>{{ student.division }}</td>
+        <td>{{ student.full_name }}</td>
+        <td>{{ student.index_number}}</td>
+        <td>{{ student.school.name  }}</td>
+        <td>{{ student.year }}</td>
       </tr>
       {% endfor %} 
+      {%else%}
+            <div class="card-body">
+                <h4>No Data Found</h4>
+            </div>
+        {%endif%}
     </tbody>
   </table>
 
-<!-- <p><strong>Total:</strong> {{ get_count }}</p>
-<p><strong>Division:</strong> {{ get_single_school.student.division }}</p> -->
+<p><strong>Total:</strong> {{ get_total }}</p>
+<p><strong>Division:</strong> {{ get_single_school.student.division }}</p>
 
 </div>
 

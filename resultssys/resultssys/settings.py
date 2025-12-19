@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'resultsapp',
+    'crispy_forms',
+    'django_filters',
+    'widget_tweaks',
 ]
 
 JAZZMIN_UI_TWEAKS = {
@@ -72,8 +75,12 @@ JAZZMIN_SETTINGS = {
         "resultsapp.User": "fas fa-school",
         "resultsapp.School": "fas fa-school",
         "resultsapp.SchoolAdministrator": "fas fa-users",
+        "resultsapp.About_us": "fas fa-users",
+        "resultsapp.Schedule": "fas fa-calendar",
+        "resultsapp.Contact_us": "fas fa-message",
+        "resultsapp.Our_partners": "fas fa-person",
+        "resultsapp.Carousel": "fas fa-circle",
         "resultsapp.Student": "fas fa-user-graduate",
-        "resultsapp.Subject": "fas fa-book",
         "resultsapp.AcademicPeriod": "fas fa-calendar",
         "resultsapp.GradingStructure": "fas fa-chart-line",
         "resultsapp.Result": "fas fa-list-ol",
@@ -86,6 +93,7 @@ JAZZMIN_SETTINGS = {
     
      "topmenu_links": [
         {"name": "Home",  "url": "/admin", "permissions": ["auth.view_user"]},
+        {"name": "View Site", "url":'iple'},
         {"model": "resultsapp.Student"},
         {"app": "resultsapp"},
     ],
@@ -94,6 +102,7 @@ JAZZMIN_SETTINGS = {
     "hide_models": ["auth.Group"],    # hide specific model
     "order_with_respect_to": ["resultsapp", "auth"],  # control order
 }
+
 
 
 MIDDLEWARE = [

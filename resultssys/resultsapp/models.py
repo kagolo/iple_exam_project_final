@@ -12,7 +12,14 @@ class School(models.Model):
     school_logo = models.FileField(upload_to='pics')
     police_station = models.CharField(max_length=255) 
     head_teacher_name = models.CharField(max_length=255)
+    contact = models.CharField(max_length=100)
     dos_theology_name = models.CharField(max_length=255)
+
+    # @property
+    # def get_sch_count(self):
+    #     total_count = self.name.count() 
+    #     return total_count
+
 
 
     def __str__(self):
@@ -60,9 +67,29 @@ class Student(models.Model):
     )
     school = models.ForeignKey(School, on_delete=models.CASCADE)
     full_name = models.CharField(max_length=255)
+    student_image = models.FileField(upload_to='pics')
     index_number = models.CharField(max_length=30, unique=True)
     gender = models.CharField(max_length=1, choices=GENDER)
     year = models.IntegerField()
+    quran_marks = models.IntegerField()
+    quran_grade = models.IntegerField()
+    fighu_marks = models.IntegerField()
+    fighu_grade = models.IntegerField()
+    lugha_marks = models.IntegerField()
+    lugha_grade = models.IntegerField()
+    tarbia_marks = models.IntegerField()
+    tarbia_grade = models.IntegerField()
+    division = models.IntegerField()
+
+    @property
+    def get_total(self):
+        total = self.quran_grade + self.fighu_grade + self.lugha_grade + self.tarbia_grade
+        return total
+
+    @property
+    def get_count(self):
+        total_count = self.division.count("1") 
+        return total_count
 
     def __str__(self):
         return f"{self.index_number} - {self.full_name}"
@@ -181,6 +208,8 @@ class Result(models.Model):
 class About_us(models.Model):
     admin_name = models.CharField(max_length=255) 
     content = models.CharField(max_length=5000)
+    content_2 = models.CharField(max_length=5000)
+    content_3 = models.CharField(max_length=5000)
 
     def __str__(self):
         return self.admin_name

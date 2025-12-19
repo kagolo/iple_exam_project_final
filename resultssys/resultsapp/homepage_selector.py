@@ -14,3 +14,10 @@ def get_schedules():
 def get_schedule(schedule_id):
     return Schedule.objects.get(pk=schedule_id)
 
+# Our_partners
+def get_our_partners():
+    return Our_partners.objects.all()
+
+def get_our_partner(our_partners_id):
+    return Our_partners.objects.get(pk=our_partners_id)
+
