@@ -3,6 +3,9 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from django.contrib.auth.models import User,auth
 
+# from reportlab.pdfgen import canvas
+# from django.http import HttpResponse
+
 from .models import *
 from .schools_selector import(get_schools,get_school)
 from .student_selector import(get_students, get_student)
@@ -72,10 +75,10 @@ def manage_student_in_students(request):
 
     get_all_students = get_students()
 
-    # get_all_students_filter = Student_filter(request.GET, queryset=get_all_students)
+    get_all_students_filter = Student_filter(request.GET, queryset=get_all_students)
     
     context={
-        "get_all_students":get_all_students,
+        "get_all_students_filter":get_all_students_filter,
         
     }
     return render(request, 'resultsapp/students.html', context)
@@ -118,3 +121,49 @@ def Manage_contact_us(request):
         "massege_form":massege_form
     }
     return render(request, "index.html",context)  
+
+
+# generate pdf file Functions
+
+def generate_pdf(request):
+    # Create the HttpResponse object with the appropriate PDF headers.
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+
+    # Create the PDF object, using the response object as its "file."
+    p = canvas.Canvas(response)
+
+    # Draw things on the PDF. Here's where the PDF generation happens.
+    # See the ReportLab documentation for the full list of functionality.
+    p.drawString(100, 100, "Hello world.")
+
+    # Close the PDF object cleanly, and we're done.
+    p.showPage()
+    p.save()
+    return response
+
+# def generate_pdf_file():
+#     from io import BytesIO
+
+#     buffer = BytesIO()
+#     p = canvas.Canvas(buffer)
+
+#     # Create a PDF document
+#     get_student_results = get_students()
+#     p.drawString(100, 750, "iple results")
+
+#     y = 700
+#     for results in get_student_results:
+#         p.drawString(100, y, f"Index: {results.index_number}")
+#         p.drawString(100, y - 20, f"Name: {results.full_name}")
+#         p.drawString(100, y - 40, f"Year: {results.year}")
+#         y -= 60
+
+#     p.showPage()
+#     p.save()
+
+#     buffer.seek(0)
+#     return FileResponse(buffer, as_attachment=True, filename="results.pdf")
+
+
+
