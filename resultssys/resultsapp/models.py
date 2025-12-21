@@ -94,6 +94,13 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.index_number} - {self.full_name}"
     
+    @property
+    def imageURL(self):
+        try:
+            url = self.student_image.url
+        except:
+            url = ''
+        return url
 
 
 

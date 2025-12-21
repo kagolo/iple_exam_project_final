@@ -6,6 +6,13 @@ from django.contrib.auth.models import User,auth
 # from reportlab.pdfgen import canvas
 # from django.http import HttpResponse
 
+from django.http import HttpResponse
+from django.views.generic import View
+
+from django.template.loader import get_template
+from .utils import render_to_pdf #created in step 4
+
+
 from .models import *
 from .schools_selector import(get_schools,get_school)
 from .student_selector import(get_students, get_student)
@@ -165,5 +172,23 @@ def generate_pdf(request):
 #     buffer.seek(0)
 #     return FileResponse(buffer, as_attachment=True, filename="results.pdf")
 
-
+class GeneratePDF(View):
+    def get(self, request, student_id, *args, **kwargs):
+        template = get_template('resultsapp/pass_slip.html')
+        get_single_school = get_student(student_id)
+        context = {
+            "get_single_school": get_single_school,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('resultsapp/pass_slip.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Results_%s.pdf" %("12341231")
+            content = "inline; filename='%s'" %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Not found")
 
