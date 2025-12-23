@@ -329,8 +329,8 @@
                            <img src="{{ sch_list.school_logo.url }}" alt=""/>
                         </div>
                         <div class="col-lg-9 col-md-8 col-sm-7 news-agile-text ">
-                           <p>{{sch_list.name}} is located in {{sch_list.location}} {{sch_list.district}} district. The school is head by {{sch_list.head_teacher_name}} and {{sch_list.dos_theology_name}} is the Director of Studies Theology.</p>
-                           <h4 class="mt-3">{{sch_list.name}} 
+                           <p><a href="{% url 'school' sch_list.id %}">{{sch_list.name}} is located in {{sch_list.location}} {{sch_list.district}} district. The school is head by {{sch_list.head_teacher_name}} and {{sch_list.dos_theology_name}} is the Director of Studies Theology.</a></p>
+                           <a href="{% url 'school' sch_list.id %}"><h4 class="mt-3">{{sch_list.name}} </a>
                            </h4>
                         </div> 
                      </div>
