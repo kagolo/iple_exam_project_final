@@ -67,14 +67,34 @@ def manage_single_school(request, school_id):
    
 
 # PASSSLIP PAGE
-def manage_passslip(request,school_id):
-    get_single_school = get_school(school_id)
+class manage_passslip(View):
+    def get(self, request, school_id, *args, **kwargs):
+        template = get_template('resultsapp/pass_slip_school.html')
+        get_single_school = get_school(school_id)
+        context = {
+            "get_single_school": get_single_school,
+        }
+        html = template.render(context)
+        pdf = render_to_pdf('resultsapp/pass_slip_school.html', context)
+        if pdf:
+            response = HttpResponse(pdf, content_type='application/pdf')
+            filename = "Results_%s.pdf" %("12341231")
+            content = "inline; filename='%s'" %(filename)
+            download = request.GET.get("download")
+            if download:
+                content = "attachment; filename='%s'" %(filename)
+            response['Content-Disposition'] = content
+            return response
+        return HttpResponse("Not found")
 
-    context={
-        "get_single_school":get_single_school,
+
+    # get_single_school = get_school(school_id)
+
+    # context={
+    #     "get_single_school":get_single_school,
         
-    }
-    return render(request, 'resultsapp/pass_slip.html', context)
+    # }
+    # return render(request, 'resultsapp/pass_slip.html', context)
 
 
 # STUDENTS PAGE
