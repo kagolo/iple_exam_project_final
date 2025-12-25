@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['ipleuganda.com']
 
+# ALLOWED_HOSTS = []
+
 
 # Application definition
 
